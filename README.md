@@ -26,6 +26,9 @@ Contributions are welcome.
 - Voting a User Story
 ![Voting Screen](https://github.com/thmsagc/simple-planning-poker/blob/main/public/voting.png?raw=true)
 
+- Vote Average
+![Vote Average](https://github.com/thmsagc/simple-planning-poker/blob/main/public/voteaverage.png?raw=true)
+
 
 ## Local Development
 
