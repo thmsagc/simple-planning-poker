@@ -1,0 +1,26 @@
+<div class="d-flex flex-row flex-wrap justify-content-center align-items-center gap-5">
+  <div class="d-flex flex-column">
+    <h1>Simple Planning Poker</h1>
+    <h5>A simple, open source and free Planning Poker tool for agile ceremonies.</h5>
+  </div>
+
+  <div class="d-flex flex-column">
+    <h5>Join a room or create a new one.</h5>
+    <form [formGroup]="joinForm" (ngSubmit)="onJoin()">
+      <div class="input-group mb-3">
+        <input formGroupName="code" type="text" class="form-control" formControlName="code" placeholder="Room code"
+               aria-label="Room code" aria-describedby="button-addon">
+        <button class="btn btn-primary" type="submit" id="button-addon">Join
+        </button>
+      </div>
+    </form>
+
+    <form [formGroup]="createForm" (ngSubmit)="onCreateRoom()" class="input-group search-group">
+      <select formControlName="type" class="form-select" aria-label="Disabled select example">
+        <option value="Sequential">Sequential</option>
+        <option value="Fibonacci">Fibonacci</option>
+      </select>
+      <button class="btn btn-primary" type="submit">Create new room</button>
+    </form>
+  </div>
+</div>

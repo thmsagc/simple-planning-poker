@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="cursor: pointer" (click)="navigateToIndex()">Simple Planning Poker</a>
+
+
+    <div class="collapse navbar-collapse gap-2" [attr.id]="uniqueId" #navbarCollapse>
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item" style="cursor: pointer" *ngFor="let link of links" (click)="closeNavbar()">
+          <a class="nav-link" [routerLink]="link.routerLink">{{link.titulo}}</a>
+        </li>
+      </ul>
+
+      <app-room-countdown style="color: white"></app-room-countdown>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + uniqueId" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>

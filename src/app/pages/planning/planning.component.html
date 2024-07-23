@@ -1,0 +1,129 @@
+<div class="main d-flex flex-column align-items-center">
+  <h2>Planning Poker</h2>
+  <div *ngIf="connected; else connect" class="d-flex flex-column gap-4">
+
+    <div class="d-flex justify-content-center align-items-center" *ngIf="stories.length > 0 && currentStory >= 0;">
+      <h1>{{ stories[currentStory] }}</h1>
+    </div>
+
+    <div class="d-flex flex-column align-items-center gap-4">
+
+      <div class="d-flex flex-column gap-2" *ngIf="reveled">
+        <div class="d-flex flex-column align-items-center">
+          <span style="font-size: 5rem; font-weight: bold; color: deepskyblue">{{ voteAverage }}</span>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row gap-2" *ngIf="reveled && votes.length > 0">
+        <app-card-reveled *ngFor="let vote of votes;" [numero]="vote.vote" [title]="vote.nickname"></app-card-reveled>
+      </div>
+
+      <div class="d-flex flex-row gap-2" *ngIf="!reveled && votes.length > 0">
+        <app-card-unreveled *ngFor="let vote of votes;" [title]="vote.nickname"></app-card-unreveled>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="started && !reveled">
+      <div class="card-header"><h5>Estimatives</h5></div>
+      <div class="card-body d-flex flex-row flex-wrap justify-content-center gap-2">
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(1)">1</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(2)">2</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(3)">3</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(4)">4</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(5)">5</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(6)">6</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(7)">7</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(8)">8</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(9)">9</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onVote(10)">10</button>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center">
+      <h3 *ngIf="!started && !reveled">Wait for the moderator to start voting.</h3>
+    </div>
+
+    <div class="card" *ngIf="nickname == participants[0]">
+      <div class="card-header"><h5>Moderator</h5></div>
+      <div class="card-body d-flex flex-row gap-2">
+        <button *ngIf="!started && nickname == participants[0]" class="btn btn-success" type="button" (click)="onStart()">
+          Start Voting
+        </button>
+        <button *ngIf="!started && currentStory < stories.length - 1 && nickname == participants[0]"
+                class="btn btn-outline-primary" type="button" (click)="onNext()">Next Story
+        </button>
+        <button *ngIf="!started && currentStory > 0 && nickname == participants[0]" class="btn btn-outline-secondary"
+                type="button" (click)="onBack()">Previous Story
+        </button>
+        <button *ngIf="started && nickname == participants[0]" class="btn btn-warning" type="button" (click)="onReveal()">
+          Reveal Votes
+        </button>
+        <button *ngIf="started && nickname == participants[0]" class="btn btn-danger" type="button" (click)="onClear()">
+          Reset Votes
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row flex-wrap gap-4">
+      <div class="card flex-grow-1" style="min-width: 15rem">
+        <div class="card-header"><h5>Participants</h5></div>
+        <div class="card-body">
+          <ul>
+            <li *ngFor="let participant of participants; let i = index">
+              <div class="d-flex flex-row gap-1 align-items-center" *ngIf="i == 0">
+                <span style="font-weight: bold">{{ participant }}</span>
+                <i class="bi bi-pencil-square"></i>
+              </div>
+              <span style="cursor:pointer;" *ngIf="i > 0" (click)="onChangeModerator(i)">{{ participant }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card flex-grow-1" *ngIf="nickname == participants[0] || stories.length > 0">
+        <div class="card-header"><h5>User Stories</h5></div>
+        <div class="card-body">
+
+          <form *ngIf="nickname == participants[0]" [formGroup]="storyForm" (ngSubmit)="onAddStory()">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" formControlName="title" placeholder="Story title"
+                     aria-label="Story title" aria-describedby="button-addon3">
+              <button class="btn btn-outline-secondary" type="submit" id="button-addon3">Save</button>
+            </div>
+          </form>
+          <ul>
+            <li style="cursor: pointer" *ngFor="let story of stories; let i = index"
+                (click)="onRemoveStory(i)">{{ story }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div>
+      <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="mensagem" placeholder="Mensagem"
+                 aria-label="Mensagem"
+                 aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Enviar</button>
+        </div>
+      </form>
+    </div>-->
+
+  </div>
+</div>
+
+<ng-template #connect>
+  <h5>Choose your nickname before joining.</h5>
+  <form [formGroup]="nicknameForm" (ngSubmit)="onConnect()">
+    <div class="input-group mb-3">
+      <input type="text" [readOnly]="connected" class="form-control" formControlName="nickname" placeholder="Nickname"
+             aria-label="Nickname" aria-describedby="button-addon">
+      <button [disabled]="connected" class="btn btn-outline-secondary" type="submit" id="button-addon">Join
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<app-toast></app-toast>

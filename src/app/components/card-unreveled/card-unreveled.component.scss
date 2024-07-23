@@ -1,0 +1,23 @@
+.carta {
+  background-image: url('../../cardbg.jpg');
+  background-repeat: repeat;
+  background-size: 236px 236px;
+  background-blend-mode: luminosity;
+  background-color: lightblue;
+  width: 4rem;
+  height: 5rem;
+  border-radius: .5rem;
+  border: 3px solid deepskyblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  -webkit-text-stroke: 2px;
+  -webkit-text-stroke-color: deepskyblue;
+}
+
+.carta-numero {
+  margin-top: -.5rem;
+  font-size: 4rem;
+  font-weight: bold;
+}
