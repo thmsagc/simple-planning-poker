@@ -18,6 +18,15 @@ Contributions are welcome.
 - The moderator can pass the role to another participant.
 - If the moderator leaves the room, another participant is defined as the new moderator.
 
+## Images
+
+- Home screen 
+![Home Screen](https://github.com/thmsagc/simple-planning-poker/blob/main/public/index.png?raw=true)
+
+- Voting a User Story
+![Voting Screen](https://github.com/thmsagc/simple-planning-poker/blob/main/public/voting.png?raw=true)
+
+
 ## Local Development
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
