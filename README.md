@@ -6,6 +6,8 @@ This is a completely free and open source service. However, there are costs asso
 
 Contributions are welcome.
 
+Copies and editions for commercialization are prohibited without authorization
+
 ## Available Resources
 
 - Creation of multiple rooms.
