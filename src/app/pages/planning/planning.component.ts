@@ -39,6 +39,7 @@ export class PlanningComponent implements OnInit {
   connected: boolean = false;
 
   started: boolean = false;
+  voteOptions: string = 'SEQUENTIAL';
   reveled: boolean = false;
   votes: any = [];
   voteAverage: number = 0;
@@ -68,6 +69,7 @@ export class PlanningComponent implements OnInit {
           this.voteAverage = data.voteAverage;
           this.currentStory = data.currentStory;
           this.stories = data.stories;
+          this.voteOptions = data.voteOptions;
           this.votes = data.votes;
           this.started = data.started;
           this.reveled = data.reveled;

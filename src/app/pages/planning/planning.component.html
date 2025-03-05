@@ -25,7 +25,7 @@
 
     <div class="card" *ngIf="started && !reveled">
       <div class="card-header"><h5>Estimatives</h5></div>
-      <div class="card-body d-flex flex-row flex-wrap justify-content-center gap-2">
+      <div class="card-body d-flex flex-row flex-wrap justify-content-center gap-2" *ngIf="voteOptions === 'SEQUENTIAL'; else fibonacci">
         <button class="btn btn-outline-primary" type="button" (click)="onVote(1)">1</button>
         <button class="btn btn-outline-primary" type="button" (click)="onVote(2)">2</button>
         <button class="btn btn-outline-primary" type="button" (click)="onVote(3)">3</button>
@@ -124,6 +124,21 @@
       </button>
     </div>
   </form>
+</ng-template>
+
+<ng-template #fibonacci>
+  <div class="card-body d-flex flex-row flex-wrap justify-content-center gap-2">
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(1)">1</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(2)">2</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(3)">3</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(5)">5</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(8)">8</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(13)">13</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(21)">21</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(34)">34</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(55)">55</button>
+    <button class="btn btn-outline-primary" type="button" (click)="onVote(89)">89</button>
+  </div>
 </ng-template>
 
 <app-toast></app-toast>
