@@ -7,7 +7,7 @@ const {json} = require("express");
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const wss = new WebSocket.Server({ noServer: true });
 const sockets = new Map();
 const server = http.createServer(app);
@@ -43,6 +43,7 @@ app.post('/create-room', (req, res) => {
             mediaVotos: 0,
             started: false,
             reveled: false,
+            voteOptions: req.body.type && req.body.type.trim().toUpperCase() === 'FIBONACCI' ? 'FIBONACCI' : 'SEQUENTIAL',
             voteMap: new Map(),
             lastActivity: new Date()
         });
@@ -68,7 +69,7 @@ function handleConnection(ws, req, code) {
             // Assign nickname to the client
             socketState.clients.set(ws, data.nickname);
             console.log(`Room ${code}: Client connected with nickname: ${data.nickname}`);
-            sendToClient(ws, JSON.stringify({ type: 'nickname', nickname: data.nickname, voteAverage: socketState.mediaVotos, text: `Welcome, ${data.nickname}!`, started: socketState.started, reveled: socketState.reveled, currentStory: socketState.currentStory, stories: socketState.stories, votes: Array.from(socketState.voteMap, ([nickname, vote]) => ({nickname, vote}))}))
+            sendToClient(ws, JSON.stringify({ type: 'nickname', nickname: data.nickname, voteAverage: socketState.mediaVotos, text: `Welcome, ${data.nickname}!`, started: socketState.started, reveled: socketState.reveled, voteOptions: socketState.voteOptions, currentStory: socketState.currentStory, stories: socketState.stories, votes: Array.from(socketState.voteMap, ([nickname, vote]) => ({nickname, vote}))}))
             sendToAllClients(socketState, JSON.stringify({ roomExpiryTime: roomExpiryTime, type: 'welcome', text: `${data.nickname} joined into the room.`, participants: Array.from(socketState.clients.values())}));
         } else if (data.type === 'message') {
             const nickname = socketState.clients.get(ws);
